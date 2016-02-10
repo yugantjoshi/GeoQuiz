@@ -14,6 +14,7 @@ public class QuizActivity extends AppCompatActivity {
     private Button trueButton, falseButton;
     private TextView questionText;
     private static final String TAG = "QuizActivity";
+    private static final String KEY_INDEX = "index";
     private ImageButton nextButton, previousButton;
     private int index =0;
     private Question[] questions = new Question[]{
@@ -106,8 +107,20 @@ public class QuizActivity extends AppCompatActivity {
                     }
             }
         });
+        if(savedInstanceState!=null)
+        {
+            index = savedInstanceState.getInt(KEY_INDEX, 0);
+        }
 
         updateQuestion();
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle savedInstanceState)
+    {
+        super.onSaveInstanceState(savedInstanceState);
+        Log.i(TAG, "onSaveInstanceState");
+        savedInstanceState.putInt(KEY_INDEX, index);
     }
 
     @Override
