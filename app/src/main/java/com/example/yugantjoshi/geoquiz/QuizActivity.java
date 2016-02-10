@@ -137,6 +137,6 @@ public class QuizActivity extends AppCompatActivity {
     public void onStop()
     {
         super.onStop();
-        Log.d(TAG, "onStop() called");
+        Log.d(TAG, "onStop()");
     }
 }
