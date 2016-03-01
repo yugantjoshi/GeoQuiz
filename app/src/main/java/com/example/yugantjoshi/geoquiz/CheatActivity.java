@@ -1,7 +1,13 @@
 package com.example.yugantjoshi.geoquiz;
 
-/**
- * Created by yugantjoshi on 2/10/16.
- */
-public class CheatActivity {
+import android.support.v7.app.AppCompatActivity;
+import android.os.Bundle;
+
+public class CheatActivity extends AppCompatActivity {
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_cheat);
+    }
 }

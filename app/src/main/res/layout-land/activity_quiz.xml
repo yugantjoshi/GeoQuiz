@@ -26,12 +26,18 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/true_button"
+            android:background="#565db4"
+            android:textColor="#ffffff"
+            android:layout_marginRight="10dp"
             android:text="@string/true_button"
             />
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/false_button"
+            android:background="#565db4"
+            android:layout_marginLeft="10dp"
+            android:textColor="#ffffff"
             android:text="@string/false_button"/>
     </LinearLayout>
     <LinearLayout
@@ -44,12 +50,15 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/prev_button"
+            android:background="#f6f6f6"
+            android:layout_margin="10dp"
             android:src="@drawable/arrow_left"/>
         <ImageButton
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:background="#f6f6f6"
             android:id="@+id/next_button"
-            android:text="@string/next_button"
+            android:layout_margin="10dp"
             android:src="@drawable/arrow_right"/>
 
     </LinearLayout>
