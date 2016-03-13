@@ -1,8 +1,10 @@
 package com.example.yugantjoshi.geoquiz;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
@@ -11,7 +13,7 @@ import android.widget.Toast;
 
 public class QuizActivity extends AppCompatActivity {
 
-    private Button trueButton, falseButton;
+    private Button trueButton, falseButton, cheatButton;
     private TextView questionText;
     private static final String TAG = "QuizActivity";
     private static final String KEY_INDEX = "index";
@@ -25,30 +27,7 @@ public class QuizActivity extends AppCompatActivity {
             new Question(R.string.question_asia, true),
     };
 
-    private void updateQuestion()
-    {
-        int question = questions[index].getResId();
-        questionText.setText(question);
-    }
-    private void previousQuestion()
-    {
-        int question = questions[index].getResId();
-        questionText.setText(question);
-    }
-    private void checkAnswer(boolean userTrue)
-    {
-        boolean answerTrue = questions[index].getIsTrue();
-        int toastId;
-        if(userTrue == answerTrue)
-        {
-            toastId = R.string.correct_toast;
-        }
-        else
-        {
-            toastId = R.string.incorrect_toast;
-        }
-        Toast.makeText(this, toastId, Toast.LENGTH_SHORT).show();
-    }
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,6 +39,7 @@ public class QuizActivity extends AppCompatActivity {
         falseButton = (Button) findViewById(R.id.false_button);
         nextButton = (ImageButton) findViewById(R.id.next_button);
         previousButton = (ImageButton) findViewById(R.id.prev_button);
+        cheatButton = (Button) findViewById(R.id.cheat_button);
 
         questionText.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -107,12 +87,47 @@ public class QuizActivity extends AppCompatActivity {
                     }
             }
         });
+        cheatButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v)
+            {
+                boolean answerIsTrue = questions[index].getIsTrue();
+                Intent i = CheatActivity.newIntent(QuizActivity.this, answerIsTrue);
+                startActivity(i);
+            }
+        });
         if(savedInstanceState!=null)
         {
             index = savedInstanceState.getInt(KEY_INDEX, 0);
         }
 
         updateQuestion();
+    }
+    private void updateQuestion()
+    {
+        int question = questions[index].getResId();
+        questionText.setGravity(Gravity.CENTER);
+        questionText.setText(question);
+    }
+    private void previousQuestion()
+    {
+        int question = questions[index].getResId();
+        questionText.setGravity(Gravity.CENTER);
+        questionText.setText(question);
+    }
+    private void checkAnswer(boolean userTrue)
+    {
+        boolean answerTrue = questions[index].getIsTrue();
+        int toastId;
+        if(userTrue == answerTrue)
+        {
+            toastId = R.string.correct_toast;
+        }
+        else
+        {
+            toastId = R.string.incorrect_toast;
+        }
+        Toast.makeText(this, toastId, Toast.LENGTH_SHORT).show();
     }
 
     @Override

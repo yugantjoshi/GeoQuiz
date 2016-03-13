@@ -60,8 +60,24 @@
             android:id="@+id/next_button"
             android:layout_margin="10dp"
             android:src="@drawable/arrow_right"/>
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_gravity="bottom|end"
+        android:layout_marginTop="20dp">
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/cheat_button"
+            android:layout_gravity="center"
+            android:text="@string/cheat_button"
+            android:background="#565db4"
+            android:textColor="#ffffff" />
 
     </LinearLayout>
+
 
 
 </FrameLayout>
