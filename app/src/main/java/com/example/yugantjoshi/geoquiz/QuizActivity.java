@@ -1,5 +1,6 @@
 package com.example.yugantjoshi.geoquiz;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -17,6 +18,9 @@ public class QuizActivity extends AppCompatActivity {
     private TextView questionText;
     private static final String TAG = "QuizActivity";
     private static final String KEY_INDEX = "index";
+    private static final String HAS_CHEATED = "hasCheated";
+    private static final int REQUEST_CODE_CHEAT = 0;
+    private boolean isCheater;
     private ImageButton nextButton, previousButton;
     private int index =0;
     private Question[] questions = new Question[]{
@@ -26,7 +30,6 @@ public class QuizActivity extends AppCompatActivity {
             new Question(R.string.question_americas, true),
             new Question(R.string.question_asia, true),
     };
-
 
 
     @Override
@@ -40,6 +43,7 @@ public class QuizActivity extends AppCompatActivity {
         nextButton = (ImageButton) findViewById(R.id.next_button);
         previousButton = (ImageButton) findViewById(R.id.prev_button);
         cheatButton = (Button) findViewById(R.id.cheat_button);
+
 
         questionText.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -66,7 +70,9 @@ public class QuizActivity extends AppCompatActivity {
             @Override
               public void onClick(View v) {
                 index = (index+1)%questions.length;
+                isCheater = false;
                 updateQuestion();
+
             }
         });
         previousButton.setOnClickListener(new View.OnClickListener() {
@@ -93,7 +99,7 @@ public class QuizActivity extends AppCompatActivity {
             {
                 boolean answerIsTrue = questions[index].getIsTrue();
                 Intent i = CheatActivity.newIntent(QuizActivity.this, answerIsTrue);
-                startActivity(i);
+                startActivityForResult(i,REQUEST_CODE_CHEAT);
             }
         });
         if(savedInstanceState!=null)
@@ -117,17 +123,42 @@ public class QuizActivity extends AppCompatActivity {
     }
     private void checkAnswer(boolean userTrue)
     {
+
         boolean answerTrue = questions[index].getIsTrue();
         int toastId;
-        if(userTrue == answerTrue)
+        if(isCheater == true)
         {
-            toastId = R.string.correct_toast;
+            toastId = R.string.judgment_toast;
         }
         else
         {
-            toastId = R.string.incorrect_toast;
+            if(userTrue == answerTrue)
+            {
+                toastId = R.string.correct_toast;
+            }
+            else
+            {
+                toastId = R.string.incorrect_toast;
+            }
         }
+
         Toast.makeText(this, toastId, Toast.LENGTH_SHORT).show();
+    }
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data)
+    {
+        if(resultCode!= Activity.RESULT_OK)
+        {
+            return;
+        }
+        if(requestCode == REQUEST_CODE_CHEAT)
+        {
+            if(data == null)
+            {
+                return;
+            }
+            isCheater = CheatActivity.wasAnswerShown(data);
+        }
     }
 
     @Override
